@@ -24,11 +24,7 @@ class CrewAiClient:
     def headers(self):
         return {"Authorization": f"Bearer {self._token}"}
 
-    def kickoff(self, id: str, message_dict: dict):
-        inputs = {"user_message": message_dict}
-        if id:
-            inputs["id"] = id
-
+    def kickoff(self, inputs: dict):
         body = {"inputs": inputs}
 
         response = requests.post(

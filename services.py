@@ -8,9 +8,7 @@ class MessageSubmissionService:
         self._client = CrewAiClient()
 
     def send_message(self, message: Message):
-        kickoff_id = self._client.kickoff(
-            self._conversation.id,
-            message.model_dump(),
-        )
+        inputs = {"id": self._conversation.id, "user_message": message.model_dump()}
+        kickoff_id = self._client.kickoff(inputs)
         result_json = self._client.status(kickoff_id)
         return Message(**result_json["history"][-1])
